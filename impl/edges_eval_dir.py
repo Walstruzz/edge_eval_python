@@ -7,8 +7,8 @@ from shutil import rmtree
 from scipy.io import loadmat
 from scipy.interpolate import interp1d
 
-from bwmorph_thin import bwmorph_thin
-from correspond_pixels import correspond_pixels
+from .bwmorph_thin import bwmorph_thin
+from .correspond_pixels import correspond_pixels
 
 
 eps = 2e-6

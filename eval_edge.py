@@ -1,8 +1,8 @@
 import time
 import os
 
-from edges_eval_dir import edges_eval_dir
-from edges_eval_plot import edges_eval_plot
+from .impl.edges_eval_dir import edges_eval_dir
+from .impl.edges_eval_plot import edges_eval_plot
 
 
 def eval_edge(alg, model_name_list, result_dir, gt_dir, workers=1):

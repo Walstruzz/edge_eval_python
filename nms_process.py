@@ -1,8 +1,8 @@
 import os
 import numpy as np
 from scipy.io import loadmat
-from toolbox import conv_tri, grad2
-from nms import fast_edge_nms
+from .impl.toolbox import conv_tri, grad2
+from .impl.nms import fast_edge_nms
 import cv2
 
 
