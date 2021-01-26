@@ -1,6 +1,8 @@
 ## Edge Eval Python
 A python implementation of [edge eval](https://github.com/s9xie/hed_release-deprecated/tree/master/examples/eval).
+
 The logic of the code is almost the same as that of the origin MATLAB implementation (see [References](#References)).
+
 ## Requirements
 * Python3
 * Numpy
@@ -17,6 +19,8 @@ cd edge_eval_python
 
 ### 2. compile cxx library
 Most of the code in this folder is copied from [davidstutz/extended-berkeley-segmentation-benchmark](https://github.com/davidstutz/extended-berkeley-segmentation-benchmark/tree/master/source).
+
+Actually, there is a more efficient function in `Scipy` that can solve the CSA problem without compiling the following cxx codes...
 ``` shell
 cd cxx/src
 source build.sh
