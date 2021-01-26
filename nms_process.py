@@ -56,4 +56,4 @@ def nms_process(model_name_list, result_dir, save_dir, key=None, file_format=".m
 
 
 if __name__ == '__main__':
-    nms_process("hed", "hed_result", "NMS_RESULT_FOLDER", key="fuse")
+    nms_process("hed", "hed_result", "NMS_RESULT_FOLDER", key="result")

@@ -40,7 +40,6 @@ def edges_eval_img(im, gt, out="", thrs=99, max_dist=0.0075, thin=True, need_v=F
     cnt_sum_r_p = np.zeros((k, 4), dtype=np.int)  # cnt_r, sum_r, cnt_p, sum_r
     v = np.zeros((*edge.shape, 3, k), dtype=np.float32)
 
-    assert workers > 0
     if workers == 1:
         for k_ in range(k):
             e1 = edge >= max(eps, thrs[k_])
@@ -85,7 +84,9 @@ def edges_eval_img(im, gt, out="", thrs=99, max_dist=0.0075, thin=True, need_v=F
                 # compute recall and precision
                 _cnt_sum_r_p = [np.sum(_match_g), np.sum(_all_g), np.count_nonzero(_match_e), np.count_nonzero(_e1)]
                 _queue.put([_cnt_sum_r_p, _k])
-
+        if workers == -1:
+            workers = mp.cpu_count()
+        workers = min(workers, k)
         queue = mp.SimpleQueue()
         split_indices = np.array_split(np.arange(k), workers)
         pool = [mp.Process(target=_process_thrs_loop,
