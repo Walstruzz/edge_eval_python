@@ -8,7 +8,7 @@ from collections import namedtuple
 from ctypes import *
 from scipy.spatial import cKDTree
 
-solver = cdll.LoadLibrary("../cxx/lib/solve_csa.so")
+solver = cdll.LoadLibrary("cxx/lib/solve_csa.so")
 c_int_pointer = POINTER(c_int32)
 
 

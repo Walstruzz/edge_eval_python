@@ -1,20 +1,21 @@
+import os
 from argparse import ArgumentParser
 
 from nms_process import nms_process
 from eval_edge import eval_edge
 
 
-def main():
-    alg = ["HED"]  # algorithms for plotting
-    model_name_list = ["hed"]  # model name
-    result_dir = "examples/hed_result"  # forward result directory
-    save_dir = "examples/nms_result"  # nms result directory
-    gt_dir = "examples/bsds500_gt"  # ground truth directory
-    key = "result"  # x = scipy.io.loadmat(filename)[key]
-    file_format = ".mat"  # ".mat" or ".npy"
-    workers = 16  # number workers
+def main(args):
+    alg = [args.alg]  # algorithms for plotting
+    model_name_list = [args.model_name_list]  # model name
+    result_dir = os.path.abspath(args.result_dir)  # forward result directory
+    save_dir = os.path.abspath(args.save_dir)  # nms result directory
+    gt_dir = os.path.abspath(args.gt_dir)  # ground truth directory
+    key = args.key  # x = scipy.io.loadmat(filename)[key]
+    file_format = args.file_format  # ".mat" or ".npy"
+    workers = args.workers  # number workers
     nms_process(model_name_list, result_dir, save_dir, key, file_format)
-    eval_edge(alg, model_name_list, result_dir, gt_dir, workers)
+    eval_edge(alg, model_name_list, save_dir, gt_dir, workers)
 
 
 if __name__ == '__main__':
@@ -28,5 +29,6 @@ if __name__ == '__main__':
     parser.add_argument("--file_format", type=str, default=".mat", help=".mat or .npy")
     parser.add_argument("--workers", type=int, default="-1", help="number workers, -1 for all workers")
     args = parser.parse_args()
+    main(args)
 
 

@@ -1,9 +1,10 @@
 import os
+import cv2
 import numpy as np
 from scipy.io import loadmat
-from .impl.toolbox import conv_tri, grad2
-from .impl.nms import fast_edge_nms
-import cv2
+
+from impl.toolbox import conv_tri, grad2
+from impl.nms import fast_edge_nms
 
 
 def nms_process_one_image(image, save_path=None, save=True):
