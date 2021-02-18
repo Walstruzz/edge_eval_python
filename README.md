@@ -45,10 +45,11 @@ python main.py --alg "HED" --model_name_list "hed" --result_dir examples/hed_res
 
 ## Result
 ### NMS Result
-<figure class="half">
-  <img src="examples/show_images/3063.png">
-  <img src="examples/show_images/5096.png">
-</figure>
+![3063](examples/show_images/3063.png)
+![5096](examples/show_images/5096.png)
+
+### F-Score
+![F-Score](examples/show_images/score.png)
 
 ## References
 * [edge eval](https://github.com/s9xie/hed_release-deprecated/tree/master/examples/eval)
