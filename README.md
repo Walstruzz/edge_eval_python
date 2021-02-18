@@ -43,6 +43,12 @@ python main.py --alg "HED" --model_name_list "hed" --result_dir examples/hed_res
 --file_format .mat --workers -1
 ```
 
+## Result
+### NMS Result
+<figure class="half">
+  <img src="examples/show_images/3063.png">
+  <img src="examples/show_images/5096.png">
+</figure>
 
 ## References
 * [edge eval](https://github.com/s9xie/hed_release-deprecated/tree/master/examples/eval)
