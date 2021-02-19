@@ -43,13 +43,15 @@ python main.py --alg "HED" --model_name_list "hed" --result_dir examples/hed_res
 --file_format .mat --workers -1
 ```
 
-## Result
-### NMS Result
+## Result(BSDS 500)
 ![3063](examples/show_images/3063.png)
 ![5096](examples/show_images/5096.png)
 
-### F-Score
 ![F-Score](examples/show_images/score.png)
+
+|  ODS  |  OIS  |  AP   | R50   |
+|-------|-------|-------|-------|
+| 0.782 | 0.791 | 0.810 | 0.897 |
 
 ## References
 * [edge eval](https://github.com/s9xie/hed_release-deprecated/tree/master/examples/eval)
@@ -57,3 +59,4 @@ python main.py --alg "HED" --model_name_list "hed" --result_dir examples/hed_res
 * [bwmorph_thin](https://gist.github.com/joefutrelle/562f25bbcf20691217b8)
 * [pdollar's image & video Matlab toolbox ](https://github.com/pdollar/toolbox)
 * [pdollar's edge detection toolbox](https://github.com/pdollar/edges)
+* [PyTorch Reimplementation of HED](https://github.com/xwjabc/hed)

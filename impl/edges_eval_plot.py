@@ -72,7 +72,7 @@ def edges_eval_plot(algs, nms=None, cols=None):
         plt.show()
         return
 
-    nms = ["[F=.80] Human"] + ["[F=.{:d}] {}".format(int(res[i, 3] * 100), nms[i]) for i in range(n)]
+    nms = ["[F=.80] Human"] + ["[F=.{:d}] {}".format(int(res[i, 3] * 1000), nms[i]) for i in range(n)]
     hs = h + hs
     plt.legend(hs, nms, loc="lower left")
     plt.show()
