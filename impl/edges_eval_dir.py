@@ -30,7 +30,7 @@ def edges_eval_img(im, gt, out="", thrs=99, max_dist=0.0075, thin=True, need_v=F
 
     # load edges and ground truth
     if isinstance(im, str):
-        edge = cv2.imread(im, cv2.IMREAD_UNCHANGED).astype(np.float32) / 255
+        edge = cv2.imread(im, cv2.IMREAD_UNCHANGED) / 255.
     else:
         edge = im
     assert edge.ndim == 2
@@ -147,14 +147,14 @@ def edges_eval_dir(res_dir, gt_dir, cleanup=0, thrs=99, max_dist=0.0075, thin=Tr
 
     assert os.path.isdir(res_dir) and os.path.isdir(gt_dir)
     ids = [os.path.split(file)[-1] for file in glob.glob(os.path.join(gt_dir, "*.mat"))]
-    for i in ids:
+    for ci, i in enumerate(ids):
         i = os.path.splitext(i)[0]
         res = os.path.join(eval_dir, "{}_ev1.txt".format(i))
         if os.path.isfile(res):
             continue
         im = os.path.join(res_dir, "{}.png".format(i))
         gt = os.path.join(gt_dir, "{}.mat".format(i))
-        print("eval {}...".format(im))
+        print("{}/{} eval {}...".format(ci, len(ids), im))
         edges_eval_img(im, gt, out=res, thrs=thrs, max_dist=max_dist, thin=thin, workers=workers)
 
     # collect evaluation results
@@ -175,11 +175,11 @@ def edges_eval_dir(res_dir, gt_dir, cleanup=0, thrs=99, max_dist=0.0075, thin=Tr
         t, res = res[:, 0], res[:, 1:]
         cnt_sum_r_p += res
         # compute OIS scores for image
-        r, p, f = compute_rpf(cnt_sum_r_p)
+        r, p, f = compute_rpf(res)
         k = f.argmax()
         ois_r1, ois_p1, ois_f1, ois_t1 = find_best_rpf(t, r, p)
         scores[i, :] = [i + 1, ois_t1, ois_r1, ois_p1, ois_f1]
-        ois_cnt_sum_r_p += cnt_sum_r_p[k, :]
+        ois_cnt_sum_r_p += res[k, :]
 
     # compute ODS R/P/F and OIS R/P/F
     r, p, f = compute_rpf(cnt_sum_r_p)

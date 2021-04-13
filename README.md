@@ -49,9 +49,18 @@ python main.py --alg "HED" --model_name_list "hed" --result_dir examples/hed_res
 
 ![F-Score](examples/show_images/score.png)
 
+
 |  ODS  |  OIS  |  AP   | R50   |
 |-------|-------|-------|-------|
-| 0.782 | 0.791 | 0.810 | 0.897 |
+| 0.789 | 0.806 | 0.810 | 0.897 |
+
+
+
+## Note
+* Because of the difference in calculation precision and the sensitivity of NMS threshold, the edge images may be **slightly** different.
+* `match_edge_maps` samples points randomly (**so as Matlab**).
+* Python and Matlab index files in different order, resulting in different order of `eval_bdry_img.txt`.
+* Python version is slower than Matlab version ( vs. 1h). Should I implement more functions in `cxx/lib/solve_cas.so`?
 
 ## References
 * [edge eval](https://github.com/s9xie/hed_release-deprecated/tree/master/examples/eval)

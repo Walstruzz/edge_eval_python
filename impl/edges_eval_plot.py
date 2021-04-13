@@ -62,7 +62,7 @@ def edges_eval_plot(algs, nms=None, cols=None):
     # plot results for every algorithm (plot best last)
     for i in range(n - 1, -1, -1):
         hs[i] = plt.plot(prs[i, :, 1], prs[i, :, 2], linestyle="-", linewidth=3, color=cols[i])[0]
-        prefix = "ODS={:.3f}, OIS={:.3f}, AP={:.3f}, R50={:.3f}".format(*res[i, [4, 6, 7, 8]])
+        prefix = "ODS={:.3f}, OIS={:.3f}, AP={:.3f}, R50={:.3f}".format(*res[i, [3, 6, 7, 8]])
         if nms:
             prefix += " - {}".format(nms[i])
         print(prefix)
@@ -72,7 +72,7 @@ def edges_eval_plot(algs, nms=None, cols=None):
         plt.show()
         return
 
-    nms = ["[F=.80] Human"] + ["[F=.{:d}] {}".format(int(res[i, 3] * 1000), nms[i]) for i in range(n)]
+    nms = ["[F=.80] Human"] + ["[F={:.2f}] {}".format(res[i, 3], nms[i]) for i in range(n)]
     hs = h + hs
     plt.legend(hs, nms, loc="lower left")
     plt.show()

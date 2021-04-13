@@ -4,7 +4,18 @@ import numpy as np
 from scipy.io import loadmat
 
 from impl.toolbox import conv_tri, grad2
-from impl.nms import fast_edge_nms
+from ctypes import *
+
+
+# NOTE:
+#    In NMS, `if edge < interp: out = 0`, I found that sometimes edge is very close to interp.
+#    `edge = 10e-8` and `interp = 11e-8` in C, while `edge = 10e-8` and `interp = 9e-8` in python.
+#    ** Such slight differences (11e-8 - 9e-8 = 2e-8) in precision **
+#    ** would lead to very different results (`out = 0` in C and `out = edge` in python). **
+#    Sadly, C implementation is not expected but needed :(
+solver = cdll.LoadLibrary("cxx/lib/solve_csa.so")
+c_float_pointer = POINTER(c_float)
+solver.nms.argtypes = [c_float_pointer, c_float_pointer, c_float_pointer, c_int, c_int, c_float, c_int, c_int]
 
 
 def nms_process_one_image(image, save_path=None, save=True):
@@ -23,8 +34,13 @@ def nms_process_one_image(image, save_path=None, save=True):
     oxx, _ = grad2(ox)
     oxy, oyy = grad2(oy)
     ori = np.mod(np.arctan(oyy * np.sign(-oxy) / (oxx + 1e-5)), np.pi)
-    edge = fast_edge_nms(edge, ori, 1, 5, 1.01)
-    edge = np.round(edge * 255).astype(np.uint8)
+    out = np.zeros_like(edge)
+    r, s, m, w, h = 1, 5, float(1.01), int(out.shape[1]), int(out.shape[0])
+    solver.nms(out.ctypes.data_as(c_float_pointer),
+               edge.ctypes.data_as(c_float_pointer),
+               ori.ctypes.data_as(c_float_pointer),
+               r, s, m, w, h)
+    edge = np.round(out * 255).astype(np.uint8)
     if save:
         cv2.imwrite(save_path, edge)
     return edge
@@ -42,6 +58,10 @@ def nms_process(model_name_list, result_dir, save_dir, key=None, file_format=".m
             os.makedirs(model_save_dir)
 
         for file in os.listdir(result_dir):
+            save_name = os.path.join(model_save_dir, "{}.png".format(os.path.splitext(file)[0]))
+            if os.path.isfile(save_name):
+                continue
+
             if os.path.splitext(file)[-1] != file_format:
                 continue
             abs_path = os.path.join(result_dir, file)
@@ -52,7 +72,6 @@ def nms_process(model_name_list, result_dir, save_dir, key=None, file_format=".m
                 image = np.load(abs_path)
             else:
                 raise NotImplementedError
-            save_name = os.path.join(model_save_dir, "{}.png".format(os.path.splitext(file)[0]))
             nms_process_one_image(image, save_name, True)
 
 

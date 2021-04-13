@@ -1,6 +1,6 @@
 ## NOTE
 I copy files from [davidstutz/extended-berkeley-segmentation-benchmark](https://github.com/davidstutz/extended-berkeley-segmentation-benchmark/tree/master/source)
-and write `src/solve.h`, `src/solve.cc`, `src/build.sh`
+and write `src/solve.h`, `src/solve.cc`, `src/nms.cc`, `src/build.sh`
  
  
 ## BUILD
