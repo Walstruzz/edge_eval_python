@@ -60,7 +60,7 @@ python main.py --alg "HED" --model_name_list "hed" --result_dir examples/hed_res
 * Because of the difference in calculation precision and the sensitivity of NMS threshold, the edge images may be **slightly** different.
 * `match_edge_maps` samples points randomly (**so as Matlab**).
 * Python and Matlab index files in different order, resulting in different order of `eval_bdry_img.txt`.
-* Python version is slower than Matlab version ( vs. 1h). Should I implement more functions in `cxx/lib/solve_cas.so`?
+* Python version is slower than Matlab version. Should I implement more functions in `cxx/lib/solve_cas.so`?
 
 ## References
 * [edge eval](https://github.com/s9xie/hed_release-deprecated/tree/master/examples/eval)
