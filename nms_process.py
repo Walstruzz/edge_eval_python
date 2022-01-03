@@ -30,6 +30,7 @@ def nms_process_one_image(image, save_path=None, save=True):
     if save and save_path is not None:
         assert os.path.splitext(save_path)[-1] == ".png"
     edge = conv_tri(image, 1)
+    edge = np.float32(edge)
     ox, oy = grad2(conv_tri(edge, 4))
     oxx, _ = grad2(ox)
     oxy, oyy = grad2(oy)
